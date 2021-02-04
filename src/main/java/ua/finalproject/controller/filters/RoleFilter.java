@@ -34,7 +34,7 @@ public class RoleFilter implements Filter {
         if (user.getRole() == RoleType.ROLE_ADMIN) {
             filterChain.doFilter(request, response);
         }
-        res.sendRedirect("/WEB-INF/pages/accessDenied.jsp");
+        request.getRequestDispatcher("/WEB-INF/pages/accessDenied.jsp").forward(req, res);
     }
 
     @Override

@@ -32,7 +32,7 @@
             <p style="text-align: center" ><fmt:message key="register.form.info"/></p>
             <c:if test="${userExists}">
                 <div class="alert ${userExists ? 'alert-danger' : ''}" role="alert">
-                    <span><fmt:message key="register.validation.userExists"/></span>
+                    <span><fmt:message key="register.error.userExists"/></span>
                 </div>
             </c:if>
 
@@ -77,12 +77,6 @@
     </div>
 </div>
 </div>
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-        crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
-        crossorigin="anonymous"></script>
 <script>
     /*    $(document).ready(function () {
             $('#error').hide();

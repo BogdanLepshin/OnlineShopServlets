@@ -33,19 +33,14 @@
                   method="post"
                   novalidate>
                 <p style="text-align: center"><fmt:message key="login.form.info"/></p>
-                <c:if test="${auth_error}">
+                <c:if test="${not empty auth_error}">
                     <div class="alert alert-danger" role="alert">
-                        <span><fmt:message key="login.auth.badCredentials"/></span>
+                        <span><fmt:message key="${auth_error}"/></span>
                     </div>
                 </c:if>
                 <c:if test="${access_error}">
                     <div class="alert alert-danger" role="alert">
                         <span><fmt:message key="login.auth.accessError"/></span>
-                    </div>
-                </c:if>
-                <c:if test="${auth_error_session_exists}">
-                    <div class="alert alert-danger" role="alert">
-                        <span><fmt:message key="login.auth.sessionExists"/></span>
                     </div>
                 </c:if>
                 <p class="form-group">
@@ -70,11 +65,5 @@
         </div>
     </div>
 </div>
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-        crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
-        crossorigin="anonymous"></script>
 </body>
 </html>

@@ -36,7 +36,7 @@ public class AuthFilter implements Filter {
             }
         }
 
-        if (req.getRequestURI().equals("/api/login") || req.getRequestURI().equals("/api/register")) {
+        if (isPageNoAuthAccess(req)) {
             if (user != null) {
                 res.sendRedirect("/api/home");
                 return;
@@ -50,14 +50,18 @@ public class AuthFilter implements Filter {
         filterChain.doFilter(request,response);
     }
 
-    @Override
-    public void destroy() {
-
+    private boolean isPageNoAuthAccess(HttpServletRequest req) {
+        return req.getRequestURI().equals("/api/login") || req.getRequestURI().equals("/api/register");
     }
 
     public boolean isAccessRestricted(HttpServletRequest request) {
         String uri = request.getRequestURI();
 
         return !uri.equals("/api/login") && !uri.equals("/api/register") && !uri.equals("/api/home");
+    }
+
+    @Override
+    public void destroy() {
+
     }
 }
