@@ -36,7 +36,7 @@ public class AuthFilter implements Filter {
             }
         }
 
-        if (isPageNoAuthAccess(req)) {
+        if (isFreeAccessPage(req)) {
             if (user != null) {
                 res.sendRedirect("/api/home");
                 return;
@@ -50,14 +50,22 @@ public class AuthFilter implements Filter {
         filterChain.doFilter(request,response);
     }
 
-    private boolean isPageNoAuthAccess(HttpServletRequest req) {
-        return req.getRequestURI().equals("/api/login") || req.getRequestURI().equals("/api/register");
+    private boolean isFreeAccessPage(HttpServletRequest req) {
+        return req.getRequestURI().equals("/api/login")
+                || req.getRequestURI().equals("/api/register");
     }
 
     public boolean isAccessRestricted(HttpServletRequest request) {
         String uri = request.getRequestURI();
 
-        return !uri.equals("/api/login") && !uri.equals("/api/register") && !uri.equals("/api/home");
+        return !uri.equals("/api/login")
+                && !uri.equals("/api/register")
+                && !uri.equals("/api/home")
+                && !uri.equals("/api/products")
+                && !uri.equals("/api/products/product_details")
+                && !uri.equals("/api/cart")
+                && !uri.equals("/api/cart/remove")
+                && !uri.equals("/api/products/addToCart");
     }
 
     @Override

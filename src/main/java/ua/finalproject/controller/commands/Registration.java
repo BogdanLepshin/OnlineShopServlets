@@ -9,10 +9,11 @@ import ua.finalproject.model.service.UserService;
 import javax.servlet.http.HttpServletRequest;
 import java.sql.SQLException;
 import java.util.Map;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Registration implements Command {
-    private final Logger log = Logger.getLogger(Registration.class.getName());
+    private final Logger LOGGER = Logger.getLogger(Registration.class.getName());
     private final UserService userService;
     private final Validator<User> validator = new RegistrationFormValidator();
 
@@ -49,8 +50,8 @@ public class Registration implements Command {
 
         try {
             userService.save(user);
-        } catch (SQLException ex) {
-            log.severe(ex.getMessage());
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, e.getMessage(), e);
             request.setAttribute("userExists", true);
             request.setAttribute("user", user);
 

@@ -2,17 +2,17 @@ package ua.finalproject.model.dao.impl;
 
 import ua.finalproject.model.dao.UserDao;
 import ua.finalproject.model.dao.mapper.UserMapper;
+import ua.finalproject.model.entity.Product;
 import ua.finalproject.model.entity.User;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import java.util.logging.Logger;
 
 public class JDBCUserDao implements UserDao {
     private final Connection connection;
-
+    private Logger log = Logger.getLogger(JDBCProductDao.class.getName());
 
     public JDBCUserDao(Connection connection) {
         this.connection = connection;
@@ -51,7 +51,7 @@ public class JDBCUserDao implements UserDao {
 
             while (rs.next()) {
                 users.add(userMapper
-                        .extractUserFromResultSet(rs));
+                        .extractFromResultSet(rs));
             }
             return users;
         } catch (SQLException e) {
@@ -62,22 +62,13 @@ public class JDBCUserDao implements UserDao {
 
 
     @Override
-    public void update(User entity) {
-
+    public User update(User entity) {
+        return null;
     }
 
     @Override
     public void delete(int id) {
 
-    }
-
-    @Override
-    public void close() {
-        try {
-            connection.close();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
     }
 
     @Override
@@ -92,7 +83,7 @@ public class JDBCUserDao implements UserDao {
 
             if (rs.next()) {
                 return userMapper
-                        .extractUserFromResultSet(rs);
+                        .extractFromResultSet(rs);
             }
             return null;
         } catch (SQLException e) {
@@ -112,7 +103,7 @@ public class JDBCUserDao implements UserDao {
 
             if (rs.next()) {
                 return userMapper
-                        .extractUserFromResultSet(rs);
+                        .extractFromResultSet(rs);
             }
             return null;
         } catch (SQLException e) {
@@ -133,12 +124,22 @@ public class JDBCUserDao implements UserDao {
 
             if (rs.next()) {
                 users.add(userMapper
-                        .extractUserFromResultSet(rs));
+                        .extractFromResultSet(rs));
             }
             return users;
         } catch (SQLException e) {
             e.printStackTrace();
             return null;
+        }
+    }
+
+    @Override
+    public void close() {
+        try {
+            connection.close();
+            log.info(this.getClass().getName() + " " + connection.isClosed());
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 }

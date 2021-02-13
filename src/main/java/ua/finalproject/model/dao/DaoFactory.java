@@ -6,13 +6,16 @@ public abstract class DaoFactory {
     private static DaoFactory daoFactory;
 
     public abstract UserDao createUserDao();
+    public abstract ProductDao createProductDao();
+    public abstract CategoryDao createCategoryDao();
+    public abstract BrandDao createBrandDao();
+    public abstract CartDao createCartDao();
 
     public static DaoFactory getInstance(){
         if( daoFactory == null ){
             synchronized (DaoFactory.class){
                 if(daoFactory==null){
-                    DaoFactory temp = new JDBCDaoFactory();
-                    daoFactory = temp;
+                    daoFactory = new JDBCDaoFactory();
                 }
             }
         }

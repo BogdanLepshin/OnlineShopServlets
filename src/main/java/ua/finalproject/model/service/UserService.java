@@ -9,7 +9,7 @@ import java.util.List;
 
 public class UserService {
 
-    DaoFactory daoFactory = DaoFactory.getInstance();
+    private final DaoFactory daoFactory = DaoFactory.getInstance();
 
     public List<User> getAllUsers(){
         try (UserDao dao = daoFactory.createUserDao()) {
@@ -18,14 +18,20 @@ public class UserService {
     }
 
     public User findUserByEmailAndPassword(String email, String password) {
-        return daoFactory.createUserDao().findByEmailAndPassword(email, password);
+        try (UserDao dao = daoFactory.createUserDao()){
+            return dao.findByEmailAndPassword(email, password);
+        }
     }
 
     public void save(User user) throws SQLException {
-        daoFactory.createUserDao().create(user);
+        try (UserDao dao = daoFactory.createUserDao()){
+            dao.create(user);
+        }
     }
 
     public User findUserByEmail(String email) {
-        return daoFactory.createUserDao().findByEmail(email);
+        try (UserDao dao = daoFactory.createUserDao()){
+            return dao.findByEmail(email);
+        }
     }
 }

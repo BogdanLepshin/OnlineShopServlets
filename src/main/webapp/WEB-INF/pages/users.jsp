@@ -45,10 +45,10 @@
     <table class="table table-bordered" style="background-color:white; margin-top: 30px;" align="center" border="1">
         <tr>
             <th scope="col">Id</th>
-            <th scope="col">First Name</th>
-            <th scope="col">Last Name</th>
-            <th scope="col">Email</th>
-            <th scope="col">Role</th>
+            <th scope="col"><fmt:message key="users.table.firstname"/></th>
+            <th scope="col"><fmt:message key="users.table.lastname"/></th>
+            <th scope="col"><fmt:message key="users.table.email"/></th>
+            <th scope="col"><fmt:message key="users.table.role"/></th>
         </tr>
         <c:forEach var="user" items="${users}">
             <tr>

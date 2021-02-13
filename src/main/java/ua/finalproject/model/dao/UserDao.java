@@ -4,7 +4,7 @@ import ua.finalproject.model.entity.User;
 
 import java.util.List;
 
-public interface UserDao extends GeneralDao<User> {
+public interface UserDao extends GenericDao<User> {
     User findByEmailAndPassword(String email, String password);
     User findByEmail(String email);
     List<User> findUserByRole(String role);

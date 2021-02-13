@@ -3,7 +3,7 @@ package ua.finalproject.model.entity;
 import java.io.Serializable;
 
 public class User implements Serializable {
-    private long id;
+    private int id;
     private String firstName;
     private String lastName;
     private String email;
@@ -13,11 +13,11 @@ public class User implements Serializable {
     public User() {
     }
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -69,7 +69,7 @@ public class User implements Serializable {
         private Builder() {
         }
 
-        public Builder setId(long id) {
+        public Builder setId(int id) {
             User.this.id = id;
             return this;
         }
