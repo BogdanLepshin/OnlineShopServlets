@@ -7,6 +7,7 @@ import ua.finalproject.model.entity.Product;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class JDBCProductDao implements ProductDao {
@@ -26,7 +27,7 @@ public class JDBCProductDao implements ProductDao {
             setValues(product, st);
             st.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, e.getMessage(), e);
             throw new SQLException("User hasn't been added");
         }
     }
@@ -49,7 +50,7 @@ public class JDBCProductDao implements ProductDao {
             }
             return users;
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, e.getMessage(), e);
             return null;
         }
     }
@@ -63,7 +64,7 @@ public class JDBCProductDao implements ProductDao {
         try (PreparedStatement st = connection.prepareStatement(query)) {
             st.setBoolean(1, true);
             st.setInt(2, categoryId);
-            st.setInt(3, start-1);
+            st.setInt(3, start * limit - limit);
             st.setInt(4, limit);
             ResultSet rs = st.executeQuery();
 
@@ -75,7 +76,7 @@ public class JDBCProductDao implements ProductDao {
             }
             return users;
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, e.getMessage(), e);
             return null;
         }
     }
@@ -97,7 +98,7 @@ public class JDBCProductDao implements ProductDao {
             return product;
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, e.getMessage(), e);
             throw new SQLException("User hasn't been added");
         }
     }
@@ -112,7 +113,7 @@ public class JDBCProductDao implements ProductDao {
             st.executeUpdate();
             LOGGER.info("Number of updated rows: " + st.executeUpdate());
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, e.getMessage(), e);
         }
     }
 
@@ -131,7 +132,7 @@ public class JDBCProductDao implements ProductDao {
             }
             return null;
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, e.getMessage(), e);
             return null;
         }
     }
@@ -152,7 +153,7 @@ public class JDBCProductDao implements ProductDao {
             }
             return products;
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, e.getMessage(), e);
             return null;
         }
     }
@@ -169,7 +170,7 @@ public class JDBCProductDao implements ProductDao {
             LOGGER.info("Number of updated rows: " + st.executeUpdate());
             return product;
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, e.getMessage(), e);
             return null;
         }
     }
@@ -193,7 +194,7 @@ public class JDBCProductDao implements ProductDao {
             st.setInt(1, id);
             LOGGER.info("Number of deleted rows: " + st.executeUpdate());
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, e.getMessage(), e);
         }
     }
 

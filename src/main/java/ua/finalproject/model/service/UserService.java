@@ -6,6 +6,7 @@ import ua.finalproject.model.entity.User;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Optional;
 
 public class UserService {
 
@@ -32,6 +33,12 @@ public class UserService {
     public User findUserByEmail(String email) {
         try (UserDao dao = daoFactory.createUserDao()){
             return dao.findByEmail(email);
+        }
+    }
+
+    public User getUserById(int userId) throws SQLException {
+        try (UserDao dao = daoFactory.createUserDao()){
+            return dao.findById(userId);
         }
     }
 }

@@ -1,5 +1,7 @@
-package ua.finalproject.controller.commands;
+package ua.finalproject.controller.commands.admin;
 
+import ua.finalproject.controller.commands.Command;
+import ua.finalproject.controller.commands.Pages;
 import ua.finalproject.controller.utils.ImageUploader;
 import ua.finalproject.model.entity.Brand;
 import ua.finalproject.model.entity.Category;
@@ -10,7 +12,6 @@ import ua.finalproject.model.service.ProductService;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.Part;
 import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -25,8 +26,7 @@ public class NewProduct implements Command {
     private final BrandService brandService;
     private final Logger LOGGER = Logger.getLogger(NewProduct.class.getName());
 
-    private final String FORWARD_NEW_PRODUCT_PAGE = "/WEB-INF/pages/admin/create_product.jsp";
-    private final String REDIRECT_PRODUCT_MANAGER_PAGE= "redirect:/products_manager";
+
     private final String UPLOAD_DIRECTORY = "product_images";
 
     public NewProduct(ProductService productService, CategoryService categoryService, BrandService brandService) {
@@ -41,7 +41,7 @@ public class NewProduct implements Command {
         if (request.getMethod().equals("GET")) {
             request.setAttribute("categories", categoryService.getAllCategories().orElse(new ArrayList<>()));
             request.setAttribute("brands", brandService.getAllBrands().orElse(new ArrayList<>()));
-            return FORWARD_NEW_PRODUCT_PAGE;
+            return Pages.FORWARD_NEW_PRODUCT_PAGE;
         }
 
         Category category = new Category();
@@ -57,7 +57,7 @@ public class NewProduct implements Command {
             price = Integer.parseInt(request.getParameter("price"));
         } catch (NumberFormatException e) {
             LOGGER.info("Invalid request params");
-            return FORWARD_NEW_PRODUCT_PAGE;
+            return Pages.FORWARD_NEW_PRODUCT_PAGE;
         }
 
         try {
@@ -76,9 +76,9 @@ public class NewProduct implements Command {
             ImageUploader.uploadImage(uploadPath, request);
         } catch (ServletException | IOException | SQLException e) {
             LOGGER.log(Level.SEVERE, e.getMessage(), e);
-            return FORWARD_NEW_PRODUCT_PAGE;
+            return Pages.FORWARD_NEW_PRODUCT_PAGE;
         }
-        return REDIRECT_PRODUCT_MANAGER_PAGE;
+        return Pages.REDIRECT_PRODUCTS_MANAGER_PAGE;
     }
 
     /*private void uploadImage(HttpServletRequest request, int productId) throws IOException, ServletException {

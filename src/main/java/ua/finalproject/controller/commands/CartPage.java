@@ -29,13 +29,16 @@ public class CartPage implements Command {
 
         if (isUserAuthenticatedAndCartNotMerged(request, user)) {
             cartDTO.setUserId(user.getId());
-            CartDTO userCartDTO = cartService.getCartByUserId(user.getId());
+            Optional<CartDTO> userCartDTO = cartService.getCartByUserId(user.getId());
+
             if (isCartNotEmpty(cartDTO)) {
                 cartService.addCart(cartDTO);
             }
-            productsInCart.addAll(userCartDTO.getItems());
+            userCartDTO.ifPresent(e -> {
+                productsInCart.addAll(e.getItems());
+                cartDTO.setTotalPrice(e.getTotalPrice() + cartDTO.getTotalPrice());
+            });
 
-            cartDTO.setTotalPrice(userCartDTO.getTotalPrice()+cartDTO.getTotalPrice());
             session.setAttribute("isMerged", true);
         }
         return Pages.FORWARD_CART_PAGE;

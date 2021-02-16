@@ -1,5 +1,7 @@
-package ua.finalproject.controller.commands;
+package ua.finalproject.controller.commands.admin;
 
+import ua.finalproject.controller.commands.Command;
+import ua.finalproject.controller.commands.Pages;
 import ua.finalproject.controller.exceptions.DBException;
 import ua.finalproject.controller.utils.ImageUploader;
 import ua.finalproject.model.entity.Brand;
@@ -11,10 +13,8 @@ import ua.finalproject.model.service.ProductService;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.Part;
 import java.io.File;
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -24,11 +24,9 @@ public class EditProduct implements Command {
     private final CategoryService categoryService;
     private final BrandService brandService;
 
-    private final String FORWARD_EDIT_PRODUCT_PAGE = "/WEB-INF/pages/admin/edit_product.jsp";
-    private final String REDIRECT_EDIT_PRODUCT_PAGE = "redirect:/products_manager/edit_product";
-    private final String REDIRECT_PRODUCT_MANAGER_PAGE = "redirect:/products_manager";
+
     private final String UPLOAD_DIRECTORY = "product_images";
-    private final Logger LOGGER = Logger.getLogger(NewProduct.class.getName());
+    private final Logger LOGGER = Logger.getLogger(EditProduct.class.getName());
 
     public EditProduct(ProductService productService, CategoryService categoryService, BrandService brandService) {
         this.productService = productService;
@@ -45,10 +43,10 @@ public class EditProduct implements Command {
                 request.setAttribute("categories", categoryService.getAllCategories().orElse(new ArrayList<>()));
                 request.setAttribute("brands", brandService.getAllBrands().orElse(new ArrayList<>()));
             } catch (NumberFormatException | DBException e) {
-                e.printStackTrace();
-                return REDIRECT_PRODUCT_MANAGER_PAGE;
+                LOGGER.log(Level.SEVERE, e.getMessage(), e);
+                return Pages.REDIRECT_PRODUCTS_MANAGER_PAGE;
             }
-            return FORWARD_EDIT_PRODUCT_PAGE;
+            return Pages.FORWARD_EDIT_PRODUCT_PAGE;
         }
 
         Category category = new Category();
@@ -82,13 +80,14 @@ public class EditProduct implements Command {
                     .setEnabled(false)
                     .build());
             if (fileName != null) {
-                String uploadPath = request.getServletContext().getRealPath("") + File.separator + UPLOAD_DIRECTORY + File.separator + product.getId();
+                String uploadPath = request.getServletContext().getRealPath("") + File.separator + UPLOAD_DIRECTORY
+                        + File.separator + product.getId();
                 ImageUploader.uploadImage(uploadPath, request);
             }
         } catch (NumberFormatException | ServletException | IOException | DBException e) {
             LOGGER.log(Level.SEVERE, e.getMessage(), e);
-            return REDIRECT_EDIT_PRODUCT_PAGE;
+            return Pages.REDIRECT_EDIT_PRODUCT_PAGE;
         }
-        return REDIRECT_PRODUCT_MANAGER_PAGE;
+        return Pages.REDIRECT_PRODUCTS_MANAGER_PAGE;
     }
 }

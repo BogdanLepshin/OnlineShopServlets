@@ -29,7 +29,7 @@ public class AuthFilter implements Filter {
 
         if (req.getRequestURI().startsWith("/api")
                 && isAccessRestricted(req) && req.getMethod().equals("GET")) {
-            if (user == null) {
+            if (isGuest(user)) {
                 req.getSession(false).setAttribute("access_error", true);
                 res.sendRedirect("/api/login");
                 return;
@@ -37,7 +37,7 @@ public class AuthFilter implements Filter {
         }
 
         if (isFreeAccessPage(req)) {
-            if (user != null) {
+            if (isUser(user)) {
                 res.sendRedirect("/api/home");
                 return;
             }
@@ -48,6 +48,14 @@ public class AuthFilter implements Filter {
         System.out.println(context.getAttribute("loggedUsers"));
 
         filterChain.doFilter(request,response);
+    }
+
+    private boolean isUser(User user) {
+        return user != null;
+    }
+
+    private boolean isGuest(User user) {
+        return user == null;
     }
 
     private boolean isFreeAccessPage(HttpServletRequest req) {

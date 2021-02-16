@@ -13,9 +13,9 @@ public class CartService {
     private static final Logger LOGGER = Logger.getLogger(CartService.class.getName());
     private final DaoFactory daoFactory = DaoFactory.getInstance();
 
-    public CartDTO getCartByUserId(int id) {
+    public Optional<CartDTO> getCartByUserId(int id) {
         try(CartDao cartDao = daoFactory.createCartDao()) {
-            return Optional.ofNullable(cartDao.findCartByUserId(id)).orElse(new CartDTO());
+            return Optional.ofNullable(cartDao.findCartByUserId(id));
         }
     }
 

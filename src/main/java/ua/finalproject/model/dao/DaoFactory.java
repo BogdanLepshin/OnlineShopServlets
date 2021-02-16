@@ -10,6 +10,8 @@ public abstract class DaoFactory {
     public abstract CategoryDao createCategoryDao();
     public abstract BrandDao createBrandDao();
     public abstract CartDao createCartDao();
+    public abstract OrderDao createOrderDao();
+    public abstract OrderDetailsDao createOrderDetailsDao();
 
     public static DaoFactory getInstance(){
         if( daoFactory == null ){

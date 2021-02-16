@@ -17,9 +17,6 @@ public class Registration implements Command {
     private final UserService userService;
     private final Validator<User> validator = new RegistrationFormValidator();
 
-    private final String REGISTER_PAGE_PATH = "/WEB-INF/pages/register.jsp";
-    private final String REDIRECT_LOGIN = "redirect:/login";
-
     public Registration(UserService userService) {
         this.userService = userService;
     }
@@ -27,7 +24,7 @@ public class Registration implements Command {
     @Override
     public String execute(HttpServletRequest request) {
         if (request.getMethod().equals("GET")) {
-            return REGISTER_PAGE_PATH;
+            return Pages.FORWARD_REGISTER_PAGE;
         }
 
         User user = User.builder()
@@ -41,11 +38,11 @@ public class Registration implements Command {
         validator.validate(user);
 
         if (validator.hasErrors()) {
-            user = validator.clearInvalidFields(user);
+            user = validator.cleanInvalidFields(user);
             addErrorsMessagesToRequest(request);
             request.setAttribute("user", user);
 
-            return REGISTER_PAGE_PATH;
+            return Pages.FORWARD_REGISTER_PAGE;
         }
 
         try {
@@ -55,10 +52,10 @@ public class Registration implements Command {
             request.setAttribute("userExists", true);
             request.setAttribute("user", user);
 
-            return REGISTER_PAGE_PATH;
+            return Pages.FORWARD_REGISTER_PAGE;
         }
 
-        return REDIRECT_LOGIN;
+        return Pages.REDIRECT_LOGIN_PAGE;
     }
 
     private void addErrorsMessagesToRequest(HttpServletRequest request) {

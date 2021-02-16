@@ -34,8 +34,9 @@ public class AddToCart implements Command {
             int productId = Integer.parseInt(request.getParameter("product_id"));
             int quantityParam = Integer.parseInt(request.getParameter("quantity"));
 
-            List<CartItem> items = cartDTO.getItems();
             Product product = productService.getProductById(productId);
+
+            List<CartItem> items = cartDTO.getItems();
             CartItem newCartItem = new CartItem(product, quantityParam);
             items.add(newCartItem);
 
@@ -47,6 +48,7 @@ public class AddToCart implements Command {
                 CartDTO newCartDTO = new CartDTO();
                 newCartDTO.getItems().add(newCartItem);
                 newCartDTO.setUserId(user.getId());
+                newCartDTO.setTotalPrice(product.getPrice()*quantityParam);
                 cartService.addCart(newCartDTO);
             }
             session.setAttribute("cart", cartDTO);

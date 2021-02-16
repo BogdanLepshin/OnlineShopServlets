@@ -2,17 +2,17 @@ package ua.finalproject.model.dao.impl;
 
 import ua.finalproject.model.dao.UserDao;
 import ua.finalproject.model.dao.mapper.UserMapper;
-import ua.finalproject.model.entity.Product;
 import ua.finalproject.model.entity.User;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class JDBCUserDao implements UserDao {
     private final Connection connection;
-    private Logger log = Logger.getLogger(JDBCProductDao.class.getName());
+    private final Logger LOGGER = Logger.getLogger(JDBCProductDao.class.getName());
 
     public JDBCUserDao(Connection connection) {
         this.connection = connection;
@@ -29,14 +29,29 @@ public class JDBCUserDao implements UserDao {
             st.setString(5, user.getRole().toString());
             st.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, e.getMessage(), e);
             throw new SQLException("User hasn't added");
         }
     }
 
     @Override
     public User findById(int id) {
-        return null;
+        final String query = "select * from user where id=?";
+        try (PreparedStatement st = connection.prepareStatement(query)) {
+            st.setInt(1, id);
+
+            ResultSet rs = st.executeQuery();
+            UserMapper userMapper = new UserMapper();
+
+            if (rs.next()) {
+                return userMapper
+                        .extractFromResultSet(rs);
+            }
+            return null;
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, e.getMessage(), e);
+            return null;
+        }
     }
 
     @Override
@@ -55,7 +70,7 @@ public class JDBCUserDao implements UserDao {
             }
             return users;
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, e.getMessage(), e);
             return null;
         }
     }
@@ -87,7 +102,7 @@ public class JDBCUserDao implements UserDao {
             }
             return null;
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, e.getMessage(), e);
             return null;
         }
     }
@@ -107,7 +122,7 @@ public class JDBCUserDao implements UserDao {
             }
             return null;
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, e.getMessage(), e);
             return null;
         }
     }
@@ -128,7 +143,7 @@ public class JDBCUserDao implements UserDao {
             }
             return users;
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, e.getMessage(), e);
             return null;
         }
     }
@@ -137,7 +152,7 @@ public class JDBCUserDao implements UserDao {
     public void close() {
         try {
             connection.close();
-            log.info(this.getClass().getName() + " " + connection.isClosed());
+            LOGGER.info(this.getClass().getName() + " " + connection.isClosed());
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

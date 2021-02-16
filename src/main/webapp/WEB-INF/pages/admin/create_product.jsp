@@ -25,7 +25,7 @@
 </header>
 <div class="container-fluid">
     <h2>Create product</h2>
-    <form action="${pageContext.request.contextPath}/api/products_manager/create_product/save" method="post" enctype="multipart/form-data" >
+    <form action="${pageContext.request.contextPath}/api/admin/products_manager/create_product/save" method="post" enctype="multipart/form-data" >
         <div class="form-group mb-3 w-25">
             <label class="form-label" for="product_pic"><fmt:message key="product.image"/></label>
             <input type="file" class="form-control" name="file" id="product_pic" accept=".png, .jpg, .jpeg" required>

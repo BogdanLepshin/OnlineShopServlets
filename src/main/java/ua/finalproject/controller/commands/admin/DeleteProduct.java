@@ -1,6 +1,8 @@
-package ua.finalproject.controller.commands;
+package ua.finalproject.controller.commands.admin;
 
 import org.apache.commons.io.FileUtils;
+import ua.finalproject.controller.commands.Command;
+import ua.finalproject.controller.commands.Pages;
 import ua.finalproject.model.service.ProductService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -13,9 +15,8 @@ public class DeleteProduct implements Command {
 
     private final ProductService productService;
     private static final String DELETE_DIRECTORY = "product_images";
-    private final String PRODUCTS_MANAGER_PAGE_PATH = "/WEB-INF/pages/admin/products_manager.jsp";
-    private final String REDIRECT_PRODUCTS_MANAGER = "redirect:/api/products_manager";
-    private final Logger LOGGER = Logger.getLogger(NewProduct.class.getName());
+
+    private final Logger LOGGER = Logger.getLogger(DeleteProduct.class.getName());
 
     public DeleteProduct(ProductService productService) {
         this.productService = productService;
@@ -29,12 +30,12 @@ public class DeleteProduct implements Command {
             deleteFolder(request, productId);
         } catch (NumberFormatException e) {
             LOGGER.severe("Invalid id");
-            return REDIRECT_PRODUCTS_MANAGER;
+            return Pages.REDIRECT_PRODUCTS_MANAGER;
         } catch (IOException e) {
-            LOGGER.log(Level.SEVERE, "Cannot delete folder", e.getMessage());
-            return REDIRECT_PRODUCTS_MANAGER;
+            LOGGER.log(Level.SEVERE, "Can't delete folder", e.getMessage());
+            return Pages.REDIRECT_PRODUCTS_MANAGER;
         }
-        return REDIRECT_PRODUCTS_MANAGER;
+        return Pages.REDIRECT_PRODUCTS_MANAGER;
     }
 
     private void deleteFolder(HttpServletRequest request, int productId) throws IOException {

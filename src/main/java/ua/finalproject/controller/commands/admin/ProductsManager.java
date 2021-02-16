@@ -1,5 +1,7 @@
-package ua.finalproject.controller.commands;
+package ua.finalproject.controller.commands.admin;
 
+import ua.finalproject.controller.commands.Command;
+import ua.finalproject.controller.commands.Pages;
 import ua.finalproject.model.service.CategoryService;
 import ua.finalproject.model.service.ProductService;
 

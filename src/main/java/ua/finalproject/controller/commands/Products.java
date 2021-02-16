@@ -20,12 +20,11 @@ public class Products implements Command {
 
     @Override
     public String execute(HttpServletRequest request) {
-
         try {
-            int currentPage = Integer.parseInt(Optional.ofNullable(request.getParameter("currentPage")).orElse("1"));
-            int recordsPerPage = 9;
+            int currentPage = Integer.parseInt(Optional.ofNullable(request.getParameter("page")).orElse("1"));
+            int recordsPerPage = 3;
             int category = Integer.parseInt(request.getParameter("category"));
-            List<Product> products = productService.getProductsPageable(currentPage, recordsPerPage, category).orElse(new ArrayList<>());
+            List<Product> products = productService.getProductsByCategory(category).orElse(new ArrayList<>());
             request.setAttribute("products", products);
             int rows = products.size();
             int numberOfPages = rows / recordsPerPage;
@@ -33,6 +32,8 @@ public class Products implements Command {
             if (numberOfPages % recordsPerPage > 0) {
                 numberOfPages++;
             }
+            request.setAttribute("page", currentPage);
+            request.setAttribute("numberOfPages", numberOfPages);
         } catch (NumberFormatException e) {
             LOGGER.log(Level.SEVERE, e.getMessage(), e);
             return Pages.FORWARD_PRODUCTS_PAGE;

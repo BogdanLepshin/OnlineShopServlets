@@ -49,7 +49,7 @@
     </filter>
     <filter-mapping>
         <filter-name>RoleFilter</filter-name>
-        <url-pattern>/api/users</url-pattern>
+        <url-pattern>/api/admin/*</url-pattern>
     </filter-mapping>
 
    <filter>
@@ -61,12 +61,12 @@
         <url-pattern>/*</url-pattern>
     </filter-mapping>
 
-    <error-page>
-        <error-code>404</error-code>
-        <location>/ErrorDemo</location>
+<!--    <error-page>
+        <error-code>500</error-code>
+        <location>/api/ErrorDemo</location>
     </error-page>
     <error-page>
         <exception-type>java.lang.Error</exception-type>
-        <location>/ErrorDemo</location>
-    </error-page>
+        <location>/api/ErrorDemo</location>
+    </error-page>-->
 </web-app>

@@ -3,7 +3,6 @@ package ua.finalproject.controller.commands;
 import ua.finalproject.model.entity.RoleType;
 import ua.finalproject.model.entity.User;
 
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.HashSet;

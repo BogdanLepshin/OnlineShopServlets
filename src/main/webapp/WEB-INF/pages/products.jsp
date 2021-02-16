@@ -23,6 +23,23 @@
     <jsp:include page="/parts/header.jsp"/>
 </header>
 <div class="container">
+    <%--<nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+            <li class="page-item">
+                <a class="page-link"
+                   href="javascript:addParam('page', '${page-1}')"><fmt:message key="users.page.prev"/></a>
+            </li>
+            <li class="page-item active">
+                <a class="page-link" href="${pageContext.request.contextPath}/api/products?page=${page}">${page}</a>
+            </li>
+            <li class="page-item">
+                <c:set var="page" value="${page}"/>
+                <c:set var="numberOfPages" value="${numberOfPages}"/>
+                <a class="page-link"
+                   href="javascript:addParam('page', '${page+1 >= numberOfPages ? page : page+1}')"><fmt:message key="users.page.next"/></a>
+            </li>
+        </ul>
+    </nav>--%>
     <div class="row justify-content-center mt-5">
         <c:forEach varStatus="i" var="item" items="${products}">
             <div class="card" style="width: 18rem;">

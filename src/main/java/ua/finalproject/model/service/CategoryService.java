@@ -4,6 +4,7 @@ import ua.finalproject.model.dao.CategoryDao;
 import ua.finalproject.model.dao.DaoFactory;
 import ua.finalproject.model.entity.Category;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 

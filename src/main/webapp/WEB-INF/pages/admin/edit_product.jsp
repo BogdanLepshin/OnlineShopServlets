@@ -24,7 +24,7 @@
 </header>
 <div class="container-fluid">
     <h2>Edit product</h2>
-    <form action="${pageContext.request.contextPath}/api/products_manager/edit_product/save" method="post" enctype="multipart/form-data" >
+    <form action="${pageContext.request.contextPath}/api/admin/products_manager/edit_product/save" method="post" enctype="multipart/form-data" >
         <div class="form-group mt-5 mb-3 w-25">
             <p>Current image: <span>${product.image}</span></p>
             <input type="text" name="id" value="${product.id}" hidden/>

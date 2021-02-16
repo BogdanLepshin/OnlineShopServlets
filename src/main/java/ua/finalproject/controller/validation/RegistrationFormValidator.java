@@ -26,7 +26,7 @@ public class RegistrationFormValidator extends AbstractValidator<User>{
         }
     }
 
-    public User clearInvalidFields(User user) {
+    public User cleanInvalidFields(User user) {
         if (!hasErrors()) {
             return user;
         }
